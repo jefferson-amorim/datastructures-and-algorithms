@@ -28,7 +28,7 @@ BinaryTree.prototype = {
     if (Number.isNaN(value)) {
       throw new TypeError(`value is not a number: <${typeof value}>${value}`);
     }
-    if (this.root === undefined) {
+    if (!this.root) {
       this.root = new BinaryNode(value);
     } else if (!this.contains(value)) {
       this.root.add(value);
@@ -103,13 +103,13 @@ function BinaryNode(value) {
 BinaryNode.prototype = {
   add(value) {
     if (value <= this.value) {
-      if (this.left === undefined) {
+      if (!this.left) {
         this.left = new BinaryNode(value);
       } else {
         this.left.add(value);
       }
     } else {
-      if (this.right === undefined) {
+      if (!this.right) {
         this.right = new BinaryNode(value);
       } else {
         this.right.add(value);
@@ -124,28 +124,28 @@ BinaryNode.prototype = {
     if (this.value === value) {
       return true;
     } else if (value < this.value) {
-      return this.left === undefined ? false : this.left.contains(value);
+      return !!this.left && this.left.contains(value);
     } else {
-      return this.right === undefined ? false : this.right.contains(value);
+      return !!this.right && this.right.contains(value);
     }
   },
   search(value) {
     if (this.value === value) {
       return this;
     } else if (value < this.value) {
-      return this.left === undefined ? undefined : this.left.search(value);
+      return !this.left ? undefined : this.left.search(value);
     } else {
-      return this.right === undefined ? undefined : this.right.search(value);
+      return !this.right ? undefined : this.right.search(value);
     }
   },
   inOrder() {
     // left, this value, right;
     const values = [];
-    if (this.left !== undefined) {
+    if (this.left) {
       values.push.apply(values, this.left.inOrder());
     }
     values.push(this.value);
-    if (this.right !== undefined) {
+    if (this.right) {
       values.push.apply(values, this.right.inOrder());
     }
     return values;
@@ -153,10 +153,10 @@ BinaryNode.prototype = {
   postOrder() {
     // left, right, this value;
     const values = [];
-    if (this.left !== undefined) {
+    if (this.left) {
       values.push.apply(values, this.left.postOrder());
     }
-    if (this.right !== undefined) {
+    if (this.right) {
       values.push.apply(values, this.right.postOrder());
     }
     values.push(this.value);
@@ -165,10 +165,10 @@ BinaryNode.prototype = {
   preOrder() {
     // this.value, left, right;
     const values = [this.value];
-    if (this.left !== undefined) {
+    if (this.left) {
       values.push.apply(values, this.left.preOrder());
     }
-    if (this.right !== undefined) {
+    if (this.right) {
       values.push.apply(values, this.right.preOrder());
     }
     return values;
