@@ -68,7 +68,14 @@ Trie.prototype = {
     // Node 10+;
     let length = chars.length;
     chars.forEach((char, i) => {
-      node = node.children[char] = node.children[char] || { key: char, children: {}, isWord: false };
+      node = node.children[char] =
+        node.children[char] ||
+        new TrieNode({
+          key: char,
+          parent: node,
+          isWord: false,
+          depth: i,
+        });
       if (i === length) {
         node.isWord = true;
       }
