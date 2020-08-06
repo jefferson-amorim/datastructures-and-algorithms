@@ -86,6 +86,9 @@ BinaryTree.prototype = {
   min() {
     return this.root ? this.root.min().value : undefined;
   },
+  max() {
+    return this.root ? this.root.max().value : undefined;
+  },
   inOrder() {
     return this.root ? this.root.inOrder() : [];
   },
@@ -119,6 +122,9 @@ BinaryNode.prototype = {
   },
   min() {
     return this.left ? this.left.min() : this;
+  },
+  max() {
+    return this.right ? this.right.max() : this;
   },
   contains(value) {
     if (this.value === value) {
